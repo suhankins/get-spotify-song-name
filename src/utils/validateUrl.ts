@@ -1,6 +1,7 @@
-export function validateUrl(url: string) {
+export function validateUrl(url: unknown) {
     return (
-        url.startsWith('https://open.spotify.com/track/') ||
-        url.startsWith('https://spotify.link/')
+        typeof url === 'string' &&
+        (url.startsWith('https://open.spotify.com/track/') ||
+            url.startsWith('https://spotify.link/'))
     );
 }

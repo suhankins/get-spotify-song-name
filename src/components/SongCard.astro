@@ -11,14 +11,14 @@ const { title, artist, cover } = Astro.props;
 ---
 
 <article class="card" role="region" aria-live="polite">
-    <img class="image" src={cover} id="song-cover" alt="Song cover" />
+    <img class="image" src={cover} data-song-cover alt="Song cover" />
     <div class="info">
         <h1 class="title">
-            <span id="song-title">{title}</span>
+            <span data-song-title>{title}</span>
             <CopyButton text={title} copiesFrom="title" />
         </h1>
         <h2 class="artist">
-            <span id="song-artist">{artist}</span>
+            <span data-song-artist>{artist}</span>
             <CopyButton text={artist} copiesFrom="artist" />
         </h2>
     </div>
