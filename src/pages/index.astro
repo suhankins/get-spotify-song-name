@@ -3,16 +3,35 @@ import Layout from '../layouts/Layout.astro';
 import SongCard from '../components/SongCard.astro';
 import AboutLink from '../components/AboutLink.astro';
 import Searchbar from '../components/Searchbar.astro';
+import { getSongData } from '../utils/getSongData';
+
+let title = 'No title';
+let artist = 'No artist';
+let cover = '/nocover.png';
+let input = '';
+let error = '';
+
+const url = Astro.url.searchParams.get('url');
+if (url) {
+    input = url;
+    try {
+        const result = await getSongData(url);
+        title = result.title;
+        artist = result.artist;
+        cover = result.cover;
+    } catch (err) {
+        if (!(err instanceof Error)) {
+            return;
+        }
+        error = err.message;
+    }
+}
 ---
 
 <Layout title="Welcome to Astro.">
     <main>
-        <Searchbar />
-        <SongCard
-            cover={'./nocover.png'}
-            title={'No title'}
-            artist={'No artist'}
-        />
+        <Searchbar defaultInput={input} error={error} />
+        <SongCard cover={cover} title={title} artist={artist} />
     </main>
     <AboutLink />
 </Layout>

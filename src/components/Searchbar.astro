@@ -1,3 +1,12 @@
+---
+interface Props {
+    defaultInput: string;
+    error: string;
+}
+
+const { defaultInput, error } = Astro.props;
+---
+
 <form role="search" data-search-form>
     <label class="url-input-label" for="searchbar"
         >Put a Spotify song URL here</label
@@ -11,6 +20,7 @@
             class="url-input"
             name="url"
             id="searchbar"
+            value={defaultInput}
             required
             data-search-textbox
         />
@@ -51,7 +61,7 @@
         </button>
     </div>
     <label class="url-input-label" aria-live="polite" data-error
-        >Error goes here</label
+        >{error}</label
     >
 </form>
 

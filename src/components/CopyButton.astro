@@ -1,16 +1,18 @@
 ---
 interface Props {
     text: string;
+    copiesFrom: string;
 }
 
-const { text } = Astro.props;
+const { text, copiesFrom } = Astro.props;
 ---
 
 <button
     type="button"
-    aria-label={`Copy ${text} to clipboard`}
+    aria-label={`Copy ${copiesFrom} to clipboard`}
     class="copyButton"
     data-copy-button={text}
+    data-copy-button-copies-from={copiesFrom}
 >
     <svg
         xmlns="http://www.w3.org/2000/svg"

@@ -15,11 +15,11 @@ const { title, artist, cover } = Astro.props;
     <div class="info">
         <h1 class="title">
             <span id="song-title">{title}</span>
-            <CopyButton text={title} />
+            <CopyButton text={title} copiesFrom="title" />
         </h1>
         <h2 class="artist">
             <span id="song-artist">{artist}</span>
-            <CopyButton text={artist} />
+            <CopyButton text={artist} copiesFrom="artist" />
         </h2>
     </div>
 </article>
