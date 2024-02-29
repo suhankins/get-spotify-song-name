@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SongCard from '../components/SongCard.astro';
+import AboutLink from '../components/AboutLink.astro';
+import Searchbar from '../components/Searchbar.astro';
+---
+
+<Layout title="Welcome to Astro.">
+    <main>
+        <Searchbar />
+        <SongCard
+            cover={'./nocover.png'}
+            title={'No title'}
+            artist={'No artist'}
+        />
+    </main>
+    <AboutLink />
+</Layout>
+
+<script>
+    const textbox = document.querySelector('[data-search-textbox]');
+    document.querySelector('[data-search-form]');
+</script>
+
+<style>
+    main {
+        display: flex;
+        flex-direction: column;
+        place-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: min(100vw, 50rem);
+        height: 100%;
+        gap: 1rem;
+    }
+</style>

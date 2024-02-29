@@ -1,0 +1,148 @@
+<form role="search" data-search-form>
+    <label class="url-input-label" for="searchbar"
+        >Put a Spotify song URL here</label
+    >
+    <div class="input-group">
+        <input
+            role="searchbox"
+            type="text"
+            autocomplete="off"
+            placeholder="https://open.spotify.com/track/..."
+            class="url-input"
+            name="url"
+            id="searchbar"
+            required
+            data-search-textbox
+        />
+        <button
+            type="submit"
+            class="search-button"
+            aria-label="Search"
+            data-search-button
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="not-loading"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                ></path>
+            </svg>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="loading"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+                ></path>
+            </svg>
+        </button>
+    </div>
+    <label class="url-input-label" aria-live="polite" data-error
+        >Error goes here</label
+    >
+</form>
+
+<style>
+    form {
+        padding: 0 1rem;
+        width: 100%;
+    }
+
+    .input-group {
+        height: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .input-group > * {
+        height: 100%;
+        border-radius: 9999px;
+        border: none;
+    }
+
+    .input-group > :first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .input-group > :last-child {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .url-input {
+        flex: 1;
+        background-color: #333;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 500;
+        padding: 0 1rem;
+        width: 50rem;
+    }
+
+    .url-input:disabled {
+        color: #aaa;
+    }
+
+    .url-input-label {
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 0 1rem;
+        width: 50rem;
+    }
+
+    .search-button {
+        aspect-ratio: 1/1;
+        background-color: #1ed760;
+        color: black;
+        padding-right: 0.5rem;
+    }
+
+    .search-button:hover,
+    .search-button:focus {
+        background-color: #1cb852;
+        cursor: pointer;
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .search-button[aria-busy='true'] > .loading {
+        animation: spin 2s linear infinite;
+        display: inline;
+    }
+
+    .search-button > .loading {
+        display: none;
+    }
+
+    .search-button[aria-busy='true'] > .not-loading {
+        display: none;
+    }
+
+    .search-button > svg {
+        width: 2rem;
+        height: 2rem;
+    }
+</style>

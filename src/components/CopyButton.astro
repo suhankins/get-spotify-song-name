@@ -1,0 +1,116 @@
+---
+interface Props {
+    text: string;
+}
+
+const { text } = Astro.props;
+---
+
+<button
+    type="button"
+    aria-label={`Copy ${text} to clipboard`}
+    class="copyButton"
+    data-copy-button={text}
+>
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="not-copied"
+    >
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z"
+        ></path>
+    </svg>
+    <span class="sr-only copied" aria-live="polite">Copied!</span>
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="copied"
+    >
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75"
+        ></path>
+    </svg>
+</button>
+
+<script>
+    document.querySelectorAll('[data-copy-button]').forEach((button) => {
+        button.addEventListener('click', (event) => {
+            const target = event.target as HTMLElement;
+            const text = target.dataset.copyButton;
+            if (!text) return;
+            navigator.clipboard.writeText(text);
+            const previousHandler = parseInt(target.dataset.copied ?? '');
+            if (!isNaN(previousHandler)) {
+                clearTimeout(previousHandler);
+            }
+            const handler = setTimeout(
+                () => target.removeAttribute('data-copied'),
+                2000
+            );
+            target.setAttribute('data-copied', handler.toString());
+        });
+    });
+</script>
+
+<style>
+    .copyButton {
+        display: inline-flex;
+        place-items: center;
+        justify-content: center;
+        background: rgba(0.2, 0.2, 0.2, 0);
+        border: none;
+        border-radius: 9999px;
+        width: 2rem;
+        height: 2rem;
+        vertical-align: bottom;
+        margin-left: 0.1rem;
+    }
+
+    .copyButton:hover {
+        border: white 1px solid;
+        background-color: rgba(0.2, 0.2, 0.2, 0.3);
+        cursor: pointer;
+    }
+
+    .copyButton > svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    .copyButton[data-copied] .not-copied {
+        display: none;
+    }
+
+    .copyButton[data-copied] .copied {
+        display: block;
+    }
+
+    .copyButton .copied {
+        display: none;
+    }
+
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+    }
+</style>

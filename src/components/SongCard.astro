@@ -1,0 +1,72 @@
+---
+import CopyButton from './CopyButton.astro';
+
+interface Props {
+    title: string;
+    artist: string;
+    cover: string;
+}
+
+const { title, artist, cover } = Astro.props;
+---
+
+<article class="card" role="region" aria-live="polite">
+    <img class="image" src={cover} id="song-cover" alt="Song cover" />
+    <div class="info">
+        <h1 class="title">
+            <span id="song-title">{title}</span>
+            <CopyButton text={title} />
+        </h1>
+        <h2 class="artist">
+            <span id="song-artist">{artist}</span>
+            <CopyButton text={artist} />
+        </h2>
+    </div>
+</article>
+
+<style>
+    .card {
+        max-width: 100%;
+        background-color: #181818;
+        border-radius: 1rem;
+        display: flex;
+        place-items: flex-start;
+        flex-direction: row;
+        padding: 1rem;
+    }
+
+    .image {
+        width: 8rem;
+        height: 8rem;
+    }
+
+    .info {
+        padding-left: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .info > * {
+        overflow-wrap: anywhere;
+        max-width: 30rem;
+        place-items: center;
+        margin: 0;
+    }
+
+    .info > img {
+        width: 70px;
+        align-self: flex-end;
+    }
+
+    .title {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .artist {
+        font-size: 1rem;
+        font-weight: 500;
+    }
+</style>
