@@ -18,7 +18,7 @@ export async function getSongData(url: string | null) {
     }
 
     if (!result.ok) {
-        throw new Error('Request failed, try again later', { cause: 500 });
+        throw new Error(`Request failed with ${result.status} status, try again later`, { cause: 500 });
     }
 
     const text = await result.text();
