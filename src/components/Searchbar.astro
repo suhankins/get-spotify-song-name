@@ -60,10 +60,21 @@ const { defaultInput, error } = Astro.props;
             </svg>
         </button>
     </div>
-    <label class="url-input-label" aria-live="polite" data-error
-        >{error}</label
-    >
+    <div class="url-input-label" aria-live="polite" data-search-error>
+        {error}
+    </div>
 </form>
+
+<script>
+    const errorField = document.querySelector('[data-search-error]');
+    if (errorField) {
+        document
+            .querySelector('[data-search-textbox]')
+            ?.addEventListener('input', () => {
+                errorField.innerHTML = '';
+            });
+    }
+</script>
 
 <style>
     form {
@@ -113,7 +124,6 @@ const { defaultInput, error } = Astro.props;
         font-size: 1rem;
         font-weight: 600;
         padding: 0 1rem;
-        width: 50rem;
     }
 
     .search-button {
