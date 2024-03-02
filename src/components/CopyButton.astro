@@ -1,18 +1,16 @@
 ---
 interface Props {
     text: string;
-    copiesFrom: string;
 }
 
-const { text, copiesFrom } = Astro.props;
+const { text } = Astro.props;
 ---
 
 <button
     type="button"
-    aria-label={`Copy ${copiesFrom} to clipboard`}
+    aria-label="Copy song title and author to clipboard"
     class="copyButton"
     data-copy-button={text}
-    data-copy-button-copies-from={copiesFrom}
 >
     <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -46,8 +44,9 @@ const { text, copiesFrom } = Astro.props;
 </button>
 
 <script>
-    document.querySelectorAll('[data-copy-button]').forEach((button) => {
-        button.addEventListener('click', (event) => {
+    document
+        .querySelector('[data-copy-button]')
+        ?.addEventListener('click', (event) => {
             const target = event.target as HTMLElement;
             const text = target.dataset.copyButton;
             if (!text) return;
@@ -62,12 +61,11 @@ const { text, copiesFrom } = Astro.props;
             );
             target.setAttribute('data-copied', handler.toString());
         });
-    });
 </script>
 
 <style>
     .copyButton {
-        display: inline-flex;
+        display: flex;
         place-items: center;
         justify-content: center;
         background: rgba(0.2, 0.2, 0.2, 0);
@@ -75,8 +73,8 @@ const { text, copiesFrom } = Astro.props;
         border-radius: 9999px;
         width: 2rem;
         height: 2rem;
-        vertical-align: bottom;
-        margin-left: 0.1rem;
+        aspect-ratio: 1;
+        margin-left: auto;
     }
 
     .copyButton:hover {

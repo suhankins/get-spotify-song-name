@@ -4,6 +4,7 @@ import SongCard from '../components/SongCard.astro';
 import AboutLink from '../components/AboutLink.astro';
 import Searchbar from '../components/Searchbar.astro';
 import { getSongData } from '../utils/getSongData';
+import { getCopyString } from '../utils/getCopyString';
 
 let title = 'No title';
 let artist = 'No artist';
@@ -31,19 +32,26 @@ if (url) {
 <Layout>
     <main>
         <Searchbar defaultInput={input} error={error} />
-        <SongCard cover={cover} title={title} artist={artist} />
+        <SongCard
+            cover={cover}
+            title={title}
+            artist={artist}
+            copyString={getCopyString(title, artist)}
+        />
     </main>
     <AboutLink />
 </Layout>
 
 <script>
     import { validateUrl } from '../utils/validateUrl';
+    import { getCopyString } from '../utils/getCopyString';
 
     const titleField = document.querySelector('[data-song-title]');
     const artistField = document.querySelector('[data-song-artist]');
     const coverField = document.querySelector(
         '[data-song-cover]'
     ) as HTMLImageElement;
+    const copyButton = document.querySelector('[data-copy-button]');
     const errorField = document.querySelector('[data-search-error]');
     const searchButton = document.querySelector(
         '[data-search-button]'
@@ -64,7 +72,7 @@ if (url) {
                 return;
             }
 
-            window.history.pushState({}, "", `?url=${url}`);
+            window.history.pushState({}, '', `?url=${url}`);
 
             searchButton.disabled = true;
             searchButton.ariaBusy = 'true';
@@ -87,6 +95,10 @@ if (url) {
             titleField.innerHTML = songData.title;
             artistField.innerHTML = songData.artist;
             coverField.src = songData.cover;
+            copyButton?.setAttribute(
+                'data-copy-button',
+                getCopyString(songData.title, songData.artist)
+            );
         };
 
         document
@@ -108,5 +120,6 @@ if (url) {
         max-width: min(100vw, 50rem);
         height: 100%;
         gap: 1rem;
+        padding: 1rem;
     }
 </style>

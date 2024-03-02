@@ -5,28 +5,25 @@ interface Props {
     title: string;
     artist: string;
     cover: string;
+    copyString: string;
 }
 
-const { title, artist, cover } = Astro.props;
+const { title, artist, cover, copyString } = Astro.props;
 ---
 
 <article class="card" role="region" aria-live="polite">
     <img class="image" src={cover} data-song-cover alt="" />
     <div class="info">
-        <h1 class="title">
-            <span data-song-title>{title}</span>
-            <CopyButton text={title} copiesFrom="title" />
-        </h1>
-        <h2 class="artist">
-            <span data-song-artist>{artist}</span>
-            <CopyButton text={artist} copiesFrom="artist" />
-        </h2>
+        <p class="title" data-song-title>{title}</p>
+        <p class="artist" data-song-artist>{artist}</p>
     </div>
+    <CopyButton text={copyString} />
 </article>
 
 <style>
     .card {
         max-width: 100%;
+        min-width: 400px;
         background-color: #181818;
         border-radius: 1rem;
         display: flex;
@@ -42,7 +39,7 @@ const { title, artist, cover } = Astro.props;
 
     .info {
         padding-left: 1rem;
-        display: flex;
+        padding-right: 0.5rem;
         flex-direction: column;
         justify-content: center;
         gap: 0.5rem;
@@ -50,14 +47,8 @@ const { title, artist, cover } = Astro.props;
 
     .info > * {
         overflow-wrap: anywhere;
-        max-width: 30rem;
-        place-items: center;
+        word-break: break-word;
         margin: 0;
-    }
-
-    .info > img {
-        width: 70px;
-        align-self: flex-end;
     }
 
     .title {
