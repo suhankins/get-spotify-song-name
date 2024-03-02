@@ -14,8 +14,14 @@ const { title, artist, cover, copyString } = Astro.props;
 <article class="card" role="region" aria-live="polite">
     <img class="image" src={cover} data-song-cover alt="" />
     <div class="info">
-        <p class="title" data-song-title>{title}</p>
-        <p class="artist" data-song-artist>{artist}</p>
+        <p class="title">
+            <span class="sr-only">Title:</span>
+            <span data-song-title>{title}</span>
+        </p>
+        <p class="artist">
+            <span class="sr-only">Title:</span>
+            <span data-song-artist>{artist}</span>
+        </p>
     </div>
     <CopyButton text={copyString} />
 </article>
