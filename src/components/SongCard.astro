@@ -11,7 +11,7 @@ const { title, artist, cover } = Astro.props;
 ---
 
 <article class="card" role="region" aria-live="polite">
-    <img class="image" src={cover} data-song-cover alt="Song cover" />
+    <img class="image" src={cover} data-song-cover alt="" />
     <div class="info">
         <h1 class="title">
             <span data-song-title>{title}</span>
