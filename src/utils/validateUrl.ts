@@ -1,7 +1,5 @@
+export const pattern = /^(https:\/\/open\.spotify\.com\/track\/|https:\/\/spotify\.link\/).+/gm;
+
 export function validateUrl(url: unknown) {
-    return (
-        typeof url === 'string' &&
-        (url.startsWith('https://open.spotify.com/track/') ||
-            url.startsWith('https://spotify.link/'))
-    );
+    return typeof url === 'string' && url.match(pattern) !== null;
 }

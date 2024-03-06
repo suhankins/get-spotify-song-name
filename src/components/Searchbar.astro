@@ -1,4 +1,6 @@
 ---
+import { pattern } from '../utils/validateUrl';
+
 interface Props {
     defaultInput: string;
     error: string;
@@ -19,6 +21,7 @@ const { defaultInput, error } = Astro.props;
                 name="url"
                 id="searchbar"
                 value={defaultInput}
+                pattern={pattern.source}
                 required
                 data-search-textbox
             />
