@@ -75,4 +75,29 @@
         white-space: nowrap;
         border-width: 0;
     }
+
+    .round-button {
+        display: flex;
+        place-items: center;
+        justify-content: center;
+        background: rgba(0.2, 0.2, 0.2, 0);
+        border: none;
+        border-radius: 9999px;
+        width: 2rem;
+        height: 2rem;
+        aspect-ratio: 1;
+    }
+
+    .round-button:hover {
+        border: white 1px solid;
+        background-color: rgba(0.2, 0.2, 0.2, 0.3);
+        cursor: pointer;
+    }
+
+    .round-button > svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        position: absolute;
+        pointer-events: none;
+    }
 </style>

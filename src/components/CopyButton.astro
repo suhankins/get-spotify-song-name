@@ -9,7 +9,7 @@ const { text } = Astro.props;
 <button
     type="button"
     aria-label="Copy song title and author to clipboard"
-    class="copyButton"
+    class="round-button copy-button"
     data-copy-button={text}
 >
     <svg
@@ -44,61 +44,30 @@ const { text } = Astro.props;
 </button>
 
 <script>
-    document
-        .querySelector('[data-copy-button]')
-        ?.addEventListener('click', (event) => {
-            const target = event.target as HTMLElement;
-            const text = target.dataset.copyButton;
-            if (!text) return;
-            navigator.clipboard.writeText(text);
-            const previousHandler = parseInt(target.dataset.copied ?? '');
-            if (!isNaN(previousHandler)) {
-                clearTimeout(previousHandler);
-            }
-            const handler = setTimeout(
-                () => target.removeAttribute('data-copied'),
-                2000
-            );
-            target.setAttribute('data-copied', handler.toString());
-        });
+    document.querySelector('[data-copy-button]')?.addEventListener('click', (event) => {
+        const target = event.target as HTMLElement;
+        const text = target.dataset.copyButton;
+        if (!text) return;
+        navigator.clipboard.writeText(text);
+        const previousHandler = parseInt(target.dataset.copied ?? '');
+        if (!isNaN(previousHandler)) {
+            clearTimeout(previousHandler);
+        }
+        const handler = setTimeout(() => target.removeAttribute('data-copied'), 2000);
+        target.setAttribute('data-copied', handler.toString());
+    });
 </script>
 
 <style>
-    .copyButton {
-        display: flex;
-        place-items: center;
-        justify-content: center;
-        background: rgba(0.2, 0.2, 0.2, 0);
-        border: none;
-        border-radius: 9999px;
-        width: 2rem;
-        height: 2rem;
-        aspect-ratio: 1;
-        margin-left: auto;
-    }
-
-    .copyButton:hover {
-        border: white 1px solid;
-        background-color: rgba(0.2, 0.2, 0.2, 0.3);
-        cursor: pointer;
-    }
-
-    .copyButton > svg {
-        width: 1.5rem;
-        height: 1.5rem;
-        position: absolute;
-        pointer-events: none;
-    }
-
-    .copyButton[data-copied] .not-copied {
+    .copy-button[data-copied] .not-copied {
         display: none;
     }
 
-    .copyButton[data-copied] .copied {
+    .copy-button[data-copied] .copied {
         display: block;
     }
 
-    .copyButton .copied {
+    .copy-button .copied {
         display: none;
     }
 </style>
