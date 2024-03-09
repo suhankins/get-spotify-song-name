@@ -30,12 +30,7 @@ if (url) {
 <Layout>
     <main>
         <Searchbar error={error} />
-        <SongCard
-            cover={cover}
-            title={title}
-            artist={artist}
-            copyString={getCopyString(title, artist)}
-        />
+        <SongCard cover={cover} title={title} artist={artist} copyString={getCopyString(title, artist)} />
     </main>
     <AboutLink />
 </Layout>
@@ -46,17 +41,11 @@ if (url) {
 
     const titleField = document.querySelector('[data-song-title]');
     const artistField = document.querySelector('[data-song-artist]');
-    const coverField = document.querySelector(
-        '[data-song-cover]'
-    ) as HTMLImageElement;
+    const coverField = document.querySelector('[data-song-cover]') as HTMLImageElement;
     const copyButton = document.querySelector('[data-copy-button]');
     const errorField = document.querySelector('[data-search-error]');
-    const searchButton = document.querySelector(
-        '[data-search-button]'
-    ) as HTMLButtonElement;
-    const searchField = document.querySelector(
-        '[data-search-textbox]'
-    ) as HTMLInputElement;
+    const searchButton = document.querySelector('[data-search-button]') as HTMLButtonElement;
+    const searchField = document.querySelector('[data-search-textbox]') as HTMLInputElement;
 
     if (titleField && artistField && coverField && errorField && searchButton) {
         const handler = async (event: Event) => {
@@ -76,9 +65,7 @@ if (url) {
             searchButton.ariaBusy = 'true';
             searchField.disabled = true;
 
-            const result = await fetch(
-                `/getSong?url=${encodeURI(url as string)}`
-            );
+            const result = await fetch(`/getSong?url=${encodeURI(url as string)}`);
 
             searchButton.disabled = false;
             searchButton.ariaBusy = null;
@@ -93,18 +80,13 @@ if (url) {
             titleField.innerHTML = songData.title;
             artistField.innerHTML = songData.artist;
             coverField.src = songData.cover;
-            copyButton?.setAttribute(
-                'data-copy-button',
-                getCopyString(songData.title, songData.artist)
-            );
+            copyButton?.setAttribute('data-copy-button', getCopyString(songData.title, songData.artist));
         };
 
-        document
-            .querySelector('[data-search-form]')
-            ?.addEventListener('submit', (event) => {
-                event.preventDefault();
-                handler(event);
-            });
+        document.querySelector('[data-search-form]')?.addEventListener('submit', (event) => {
+            event.preventDefault();
+            handler(event);
+        });
     }
 </script>
 

@@ -24,9 +24,7 @@ export async function getSongData(url: string | null) {
     const text = await result.text();
 
     const title = text.match(/(?<=:title" content=")(.*?)(?=")/gm)?.[0];
-    const artist = text.match(
-        /(?<=:description" content=")(.*?)(?= · )/gm
-    )?.[0];
+    const artist = text.match(/(?<=:description" content=")(.*?)(?= · )/gm)?.[0];
     const cover = text.match(/(?<=:image" content=")(.*?)(?=")/gm)?.[0];
 
     if (!title || !artist || !cover) {
