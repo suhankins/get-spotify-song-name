@@ -1,5 +1,6 @@
 import he from 'he';
 import { validateUrl } from './validateUrl';
+import { getCoverColor } from './getCoverColor';
 
 export async function getSongData(url: string | null) {
     if (!url || !validateUrl(url)) {
@@ -31,9 +32,12 @@ export async function getSongData(url: string | null) {
         throw new Error('Invalid URL', { cause: 400 });
     }
 
+    const color = await getCoverColor(cover);
+
     return {
         title: he.decode(title),
         artist: he.decode(artist),
         cover,
+        color
     };
 }

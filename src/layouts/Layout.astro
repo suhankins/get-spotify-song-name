@@ -1,3 +1,11 @@
+---
+interface Props {
+    color: string | null;
+}
+
+const { color } = Astro.props;
+---
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -18,7 +26,7 @@
         <meta name="generator" content={Astro.generator} />
         <title>Get Spotify Song Name</title>
     </head>
-    <body>
+    <body style={{'--cover-color': color}}>
         <slot />
     </body>
 </html>
@@ -40,12 +48,8 @@
 
         color-scheme: dark;
         color: rgba(255, 255, 255, 0.87);
-        background-color: #242424;
-        background-image: linear-gradient(
-            to bottom,
-            #1ed7605e 0%,
-            #0ff0 30% 100%
-        );
+
+        --cover-color: #1ed7605e;
 
         font-synthesis: none;
         text-rendering: optimizeLegibility;
@@ -62,6 +66,12 @@
         justify-content: center;
         min-width: 320px;
         min-height: 100vh;
+        background-color: #242424;
+        background-image: linear-gradient(
+            to bottom,
+            var(--cover-color) 0%,
+            #0ff0 30% 100%
+        );
     }
 
     .sr-only {
