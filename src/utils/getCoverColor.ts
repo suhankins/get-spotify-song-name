@@ -8,7 +8,7 @@ export async function getCoverColor(coverUri: string) {
             const componentIndex = index % 4;
             // every 4th component is alpha
             if (componentIndex === 3) return acc;
-            const pixelIndex = Math.floor(index / 3);
+            const pixelIndex = Math.floor(index / 4);
             acc[componentIndex] = (acc[componentIndex] * pixelIndex + component) / (pixelIndex + 1);
             return acc;
         },
