@@ -46,9 +46,6 @@ const { title, artist, cover, copyString } = Astro.props;
     .info {
         padding-left: 1rem;
         padding-right: 0.5rem;
-        flex-direction: column;
-        justify-content: center;
-        gap: 0.5rem;
     }
 
     .info > * {
@@ -65,5 +62,24 @@ const { title, artist, cover, copyString } = Astro.props;
     .artist {
         font-size: 1rem;
         font-weight: 500;
+    }
+
+    @media screen and (max-width: 500px) {
+        .card {
+            max-width: 375px;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .image {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1/1;
+        }
+
+        .info {
+            padding-left: 0;
+            padding-right: 0;
+        }
     }
 </style>

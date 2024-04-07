@@ -68,13 +68,17 @@ const { color, song } = Astro.props;
         place-items: center;
         justify-content: center;
         min-width: 320px;
-        min-height: 100vh;
+        min-height: 100dvh;
         background-color: #242424;
         background-image: linear-gradient(
             to bottom,
             var(--cover-color) 0%,
             #0ff0 30% 100%
         );
+    }
+
+    body > * {
+        margin-top: auto;
     }
 
     .sr-only {
