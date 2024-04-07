@@ -4,7 +4,7 @@ import CopyButton from './CopyButton.astro';
 interface Props {
     title: string;
     artist: string;
-    cover: string;
+    cover: string | null;
     copyString: string;
 }
 
@@ -12,7 +12,9 @@ const { title, artist, cover, copyString } = Astro.props;
 ---
 
 <article class="card" role="region" aria-live="polite">
-    <img class="image" src={cover} data-song-cover alt="" />
+    <div class="image">
+        <img src={cover} data-song-cover alt="" />
+    </div>
     <div class="info">
         <p class="title">
             <span class="sr-only">Title:</span>
@@ -41,6 +43,18 @@ const { title, artist, cover, copyString } = Astro.props;
     .image {
         width: 8rem;
         height: 8rem;
+        background-color: #202020;
+    }
+
+    .image > img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1/1;
+        display: block;
+    }
+
+    .image > img:not([src]) {
+        visibility: hidden;
     }
 
     .info {
@@ -73,7 +87,7 @@ const { title, artist, cover, copyString } = Astro.props;
 
         .image {
             width: 100%;
-            height: auto;
+            height: min-content;
             aspect-ratio: 1/1;
         }
 
