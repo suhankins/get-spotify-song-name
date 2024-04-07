@@ -15,17 +15,19 @@ const { title, artist, cover, copyString } = Astro.props;
     <div class="image">
         <img src={cover} data-song-cover alt="" />
     </div>
-    <div class="info">
-        <p class="title">
-            <span class="sr-only">Title:</span>
-            <span data-song-title>{title}</span>
-        </p>
-        <p class="artist">
-            <span class="sr-only">Artist:</span>
-            <span data-song-artist>{artist}</span>
-        </p>
+    <div class="info-container">
+        <div class="info">
+            <p class="title">
+                <span class="sr-only">Title:</span>
+                <span data-song-title>{title}</span>
+            </p>
+            <p class="artist">
+                <span class="sr-only">Artist:</span>
+                <span data-song-artist>{artist}</span>
+            </p>
+        </div>
+        <CopyButton text={copyString} />
     </div>
-    <CopyButton text={copyString} />
 </article>
 
 <style>
@@ -44,6 +46,7 @@ const { title, artist, cover, copyString } = Astro.props;
         width: 8rem;
         height: 8rem;
         background-color: #202020;
+        flex-shrink: 0;
     }
 
     .image > img {
@@ -55,6 +58,11 @@ const { title, artist, cover, copyString } = Astro.props;
 
     .image > img:not([src]) {
         visibility: hidden;
+    }
+
+    .info-container {
+        display: flex;
+        width: 100%;
     }
 
     .info {
