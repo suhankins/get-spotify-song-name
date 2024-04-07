@@ -1,9 +1,12 @@
 ---
+import { websiteTitle } from '../utils/websiteTitle';
+
 interface Props {
     color: string | null;
+    song: string | null;
 }
 
-const { color } = Astro.props;
+const { color, song } = Astro.props;
 ---
 
 <!doctype html>
@@ -24,7 +27,7 @@ const { color } = Astro.props;
         <link rel="manifest" href="manifest.json" />
         <meta name="theme-color" content="#1ed760" />
         <meta name="generator" content={Astro.generator} />
-        <title>Get Spotify Song Name</title>
+        <title>{song ? `${song} |` : ''}{websiteTitle}</title>
     </head>
     <body style={{'--cover-color': color}}>
         <slot />

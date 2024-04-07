@@ -4,10 +4,11 @@ import SongCard from '../components/SongCard.astro';
 import AboutLink from '../components/AboutLink.astro';
 import Searchbar from '../components/Searchbar.astro';
 import { getSongData } from '../utils/getSongData';
-import { getCopyString } from '../utils/getCopyString';
+import { getFullTitle } from '../utils/getFullTitle';
 
 let title = 'No title';
 let artist = 'No artist';
+let fullTitle = null;
 let cover = '/nocover.png';
 let error = '';
 let color: string | null = null;
@@ -20,6 +21,7 @@ if (url) {
         artist = result.artist;
         cover = result.cover;
         color = result.color;
+        fullTitle = getFullTitle(title, artist);
     } catch (err) {
         if (!(err instanceof Error)) {
             return;
@@ -29,17 +31,18 @@ if (url) {
 }
 ---
 
-<Layout color={color}>
+<Layout song={fullTitle} color={color}>
     <main>
         <Searchbar error={error} />
-        <SongCard cover={cover} title={title} artist={artist} copyString={getCopyString(title, artist)} />
+        <SongCard cover={cover} title={title} artist={artist} copyString={getFullTitle(title, artist)} />
     </main>
     <AboutLink />
 </Layout>
 
 <script>
     import { validateUrl } from '../utils/validateUrl';
-    import { getCopyString } from '../utils/getCopyString';
+    import { getFullTitle } from '../utils/getFullTitle';
+    import { websiteTitle } from '../utils/websiteTitle';
 
     const titleField = document.querySelector('[data-song-title]');
     const artistField = document.querySelector('[data-song-artist]');
@@ -82,7 +85,9 @@ if (url) {
             titleField.innerHTML = songData.title;
             artistField.innerHTML = songData.artist;
             coverField.src = songData.cover;
-            copyButton?.setAttribute('data-copy-button', getCopyString(songData.title, songData.artist));
+            const fullTitle = getFullTitle(songData.title, songData.artist);
+            copyButton?.setAttribute('data-copy-button', fullTitle);
+            document.title = `${fullTitle} | ${websiteTitle}`;
             document.body.style.setProperty('--cover-color', songData.color);
         };
 
