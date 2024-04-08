@@ -13,23 +13,16 @@ const { color, song } = Astro.props;
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta
-            name="description"
-            content="Tool to copy Spotify song name from share link"
-        />
+        <meta name="description" content="Tool to copy Spotify song name from share link" />
         <meta name="viewport" content="width=device-width" />
-        <link
-            rel="apple-touch-icon"
-            href="/apple-touch-icon.png"
-            sizes="180x180"
-        />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="manifest" href="manifest.json" />
         <meta name="theme-color" content="#1ed760" />
         <meta name="generator" content={Astro.generator} />
         <title>{song ? `${song} |` : ''}{websiteTitle}</title>
     </head>
-    <body style={{'--cover-color': color}}>
+    <body style={{ '--cover-color': color }}>
         <slot />
     </body>
 </html>
@@ -42,6 +35,12 @@ const { color, song } = Astro.props;
     *:before,
     *:after {
         box-sizing: inherit;
+    }
+
+    @property --cover-color {
+        syntax: '<color>';
+        initial-value: #1ed7605e;
+        inherits: false;
     }
 
     :root {
@@ -70,11 +69,8 @@ const { color, song } = Astro.props;
         min-width: 320px;
         min-height: 100dvh;
         background-color: #242424;
-        background-image: linear-gradient(
-            to bottom,
-            var(--cover-color) 0%,
-            #0ff0 30% 100%
-        );
+        background-image: linear-gradient(to bottom, var(--cover-color) 0%, #0ff0 30% 100%);
+        transition: --cover-color 3s;
     }
 
     body > * {
