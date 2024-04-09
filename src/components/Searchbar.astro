@@ -1,5 +1,7 @@
 ---
 import { pattern } from '../utils/validateUrl';
+import Clipboard from './icons/Clipboard.astro';
+import Cross from './icons/Cross.astro';
 
 interface Props {
     error: string;
@@ -23,17 +25,13 @@ const { error } = Astro.props;
                 required
                 data-search-textbox
             />
-            <button type="reset" class="round-button clear-button" data-search-clear>
+            <button type="reset" class="round-button input-button clear-button" data-search-clear>
                 <span class="sr-only">Clear</span>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                >
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path>
-                </svg>
+                <Cross />
+            </button>
+            <button type="button" class="round-button input-button paste-button" data-search-paste>
+                <span class="sr-only">Paste from clipboard</span>
+                <Clipboard />
             </button>
         </div>
         <button type="submit" class="search-button" data-search-button>
@@ -79,6 +77,17 @@ const { error } = Astro.props;
         searchbox.addEventListener('input', () => {
             errorField.innerHTML = '';
         });
+    }
+
+    const pasteButton = document.querySelector('[data-search-paste]');
+    if (pasteButton) {
+        if (searchbox && navigator.clipboard.readText) {
+            pasteButton.addEventListener('click', () => {
+                navigator.clipboard.readText().then((text) => (searchbox.value = text));
+            });
+        } else {
+            pasteButton.remove();
+        }
     }
 </script>
 
@@ -126,7 +135,11 @@ const { error } = Astro.props;
         display: none;
     }
 
-    .clear-button {
+    .url-input:not(:placeholder-shown) + .clear-button + .paste-button {
+        display: none;
+    }
+
+    .input-button {
         position: absolute;
         right: 0.5rem;
     }
