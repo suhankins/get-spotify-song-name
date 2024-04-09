@@ -35,16 +35,16 @@ const { title, artist, cover, copyString } = Astro.props;
         max-width: 100%;
         min-width: 400px;
         background-color: #181818;
-        border-radius: 1rem;
+        border-radius: 16px;
         display: flex;
         place-items: flex-start;
         flex-direction: row;
-        padding: 1rem;
+        padding: 16px;
     }
 
     .image {
-        width: 8rem;
-        height: 8rem;
+        width: 128px;
+        height: 128px;
         background-color: #202020;
         flex-shrink: 0;
     }
@@ -66,8 +66,8 @@ const { title, artist, cover, copyString } = Astro.props;
     }
 
     .info {
-        padding-left: 1rem;
-        padding-right: 0.5rem;
+        padding-left: 16px;
+        padding-right: 8px;
     }
 
     .info > * {
@@ -89,9 +89,10 @@ const { title, artist, cover, copyString } = Astro.props;
     @media screen and (max-width: 640px) {
         .card {
             max-width: 375px;
+            min-width: 100%;
             flex-direction: column;
-            gap: 1rem;
-            padding-bottom: 1.5rem;
+            gap: 16px;
+            padding-bottom: 24px;
         }
 
         .image {
