@@ -6,6 +6,7 @@
     "background_color": "#242424",
     "display": "standalone",
     "start_url": "/",
+    "scope": "https://spotify.detta.dev/",
     "icons": [
         {
             "src": "pwa-192x192.png",
