@@ -3,18 +3,27 @@ import Jimp from 'jimp';
 export async function getCoverColor(coverUri: string) {
     const image = await Jimp.read(coverUri).catch(() => null);
     if (!image) return null;
-    const averageColor = image.bitmap.data.reduce(
-        (acc, component, index) => {
-            const componentIndex = index % 4;
-            // every 4th component is alpha
-            if (componentIndex === 3) return acc;
-            const pixelIndex = Math.floor(index / 4);
-            acc[componentIndex] = (acc[componentIndex] * pixelIndex + component) / (pixelIndex + 1);
-            return acc;
-        },
-        [0, 0, 0]
-    );
-    return `#${covertToHex(averageColor)}5e`;
+
+    // 4 components, once every 5 pixels
+    const step = 4 * 5;
+
+    let rTotal = 0;
+    let gTotal = 0;
+    let bTotal = 0;
+    let total = 0;
+
+    for (let i = 0; i < image.bitmap.data.length; i += step) {
+        rTotal += image.bitmap.data[i];
+        gTotal += image.bitmap.data[i + 1];
+        bTotal += image.bitmap.data[i + 2];
+        total++;
+    }
+
+    return `#${covertToHex([
+        Math.round(rTotal / total),
+        Math.round(gTotal / total),
+        Math.round(bTotal / total),
+    ])}5e`;
 }
 
 const covertToHex = (array: number[]) =>
