@@ -20,7 +20,7 @@ const { color, song } = Astro.props;
         <link rel="manifest" href="manifest.json" />
         <meta name="theme-color" content="#1ed760" />
         <meta name="generator" content={Astro.generator} />
-        <title>{song ? `${song} |` : ''}{websiteTitle}</title>
+        <title>{song ? `${song} | ` : ''}{websiteTitle}</title>
     </head>
     <body style={{ '--cover-color': color }}>
         <slot />
