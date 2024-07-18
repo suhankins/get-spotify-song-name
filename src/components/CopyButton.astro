@@ -12,13 +12,7 @@ const { text } = Astro.props;
     class="round-button copy-button"
     data-copy-button={text}
 >
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        
-        viewBox="0 0 24 24"
-        
-        class="not-copied"
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="not-copied">
         <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -26,13 +20,7 @@ const { text } = Astro.props;
         ></path>
     </svg>
     <span class="sr-only copied" aria-live="polite">Copied!</span>
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        
-        viewBox="0 0 24 24"
-                
-        class="copied"
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="copied">
         <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -60,7 +48,7 @@ const { text } = Astro.props;
     .copy-button {
         margin-left: auto;
     }
-    
+
     .copy-button[data-copied] .not-copied {
         display: none;
     }

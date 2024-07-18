@@ -36,25 +36,13 @@ const { error } = Astro.props;
         </div>
         <button type="submit" class="search-button" data-search-button>
             <span class="sr-only">Search</span>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                
-                viewBox="0 0 24 24"
-                                
-                class="not-loading"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="not-loading">
                 <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"></path>
             </svg>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                
-                viewBox="0 0 24 24"
-                                
-                class="loading"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="loading">
                 <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
@@ -69,19 +57,21 @@ const { error } = Astro.props;
 </form>
 
 <script>
-    const errorField = document.querySelector('[data-search-error]');
-    const searchbox = document.querySelector('[data-search-textbox]') as HTMLInputElement | null;
-    if (errorField && searchbox) {
-        searchbox.addEventListener('input', () => {
-            errorField.innerHTML = '';
-        });
-    }
+    document.querySelector('[data-search-textbox]')?.addEventListener('input', () => {
+        document.querySelector('[data-search-error]')!.innerHTML = '';
+    });
 
     const pasteButton = document.querySelector('[data-search-paste]');
     if (pasteButton) {
-        if (searchbox && navigator.clipboard.readText) {
+        if (navigator.clipboard.readText) {
             pasteButton.addEventListener('click', () => {
-                navigator.clipboard.readText().then((text) => (searchbox.value = text));
+                navigator.clipboard
+                    .readText()
+                    .then(
+                        (text) =>
+                            ((document.querySelector('[data-search-textbox]') as HTMLInputElement).value =
+                                text)
+                    );
             });
         } else {
             pasteButton.remove();

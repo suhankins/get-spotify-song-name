@@ -44,58 +44,53 @@ if (url) {
     import { getFullTitle } from '../utils/getFullTitle';
     import { websiteTitle } from '../utils/websiteTitle';
 
-    const titleField = document.querySelector('[data-song-title]');
-    const artistField = document.querySelector('[data-song-artist]');
-    const coverField = document.querySelector('[data-song-cover]') as HTMLImageElement;
-    const copyButton = document.querySelector('[data-copy-button]');
-    const errorField = document.querySelector('[data-search-error]');
-    const searchButton = document.querySelector('[data-search-button]') as HTMLButtonElement;
-    const searchField = document.querySelector('[data-search-textbox]') as HTMLInputElement;
+    const handler = async (event: Event) => {
+        const searchButton = document.querySelector('[data-search-button]') as HTMLButtonElement;
+        const errorField = document.querySelector('[data-search-error]') as HTMLElement;
+        const searchField = document.querySelector('[data-search-textbox]') as HTMLInputElement;
+        const copyButton = document.querySelector('[data-copy-button]');
 
-    if (titleField && artistField && coverField && errorField && searchButton) {
-        const handler = async (event: Event) => {
-            if (!(event instanceof SubmitEvent)) return;
-            const target = event.target;
-            if (!(target instanceof HTMLFormElement)) return;
-            const formData = new FormData(target);
-            const url = formData.get('url');
-            if (!validateUrl(url)) {
-                errorField.innerHTML = 'Invalid URL';
-                return;
-            }
+        if (!(event instanceof SubmitEvent)) return;
+        const target = event.target;
+        if (!(target instanceof HTMLFormElement)) return;
+        const formData = new FormData(target);
+        const url = formData.get('url');
+        if (!validateUrl(url)) {
+            errorField.innerHTML = 'Invalid URL';
+            return;
+        }
 
-            window.history.pushState({}, '', `?url=${url}`);
+        window.history.pushState({}, '', `?url=${url}`);
 
-            searchButton.disabled = true;
-            searchButton.ariaBusy = 'true';
-            searchField.disabled = true;
+        searchButton.disabled = true;
+        searchButton.ariaBusy = 'true';
+        searchField.disabled = true;
 
-            const result = await fetch(`/getSong?url=${encodeURI(url as string)}`);
+        const result = await fetch(`/getSong?url=${encodeURI(url as string)}`);
 
-            searchButton.disabled = false;
-            searchButton.ariaBusy = null;
-            searchField.disabled = false;
+        searchButton.disabled = false;
+        searchButton.ariaBusy = null;
+        searchField.disabled = false;
 
-            if (!result.ok) {
-                errorField.innerHTML = await result.text();
-                return;
-            }
-            const songData = await result.json();
+        if (!result.ok) {
+            errorField.innerHTML = await result.text();
+            return;
+        }
+        const songData = await result.json();
 
-            titleField.innerHTML = songData.title;
-            artistField.innerHTML = songData.artist;
-            coverField.src = songData.cover;
-            const fullTitle = getFullTitle(songData.title, songData.artist);
-            copyButton?.setAttribute('data-copy-button', fullTitle);
-            document.title = `${fullTitle} | ${websiteTitle}`;
-            document.body.style.setProperty('--cover-color', songData.color);
-        };
+        document.querySelector('[data-song-title]')!.innerHTML = songData.title;
+        document.querySelector('[data-song-artist]')!.innerHTML = songData.artist;
+        (document.querySelector('[data-song-cover]') as HTMLImageElement).src = songData.cover;
+        const fullTitle = getFullTitle(songData.title, songData.artist);
+        copyButton?.setAttribute('data-copy-button', fullTitle);
+        document.title = `${fullTitle} | ${websiteTitle}`;
+        document.body.style.setProperty('--cover-color', songData.color);
+    };
 
-        document.querySelector('[data-search-form]')?.addEventListener('submit', (event) => {
-            event.preventDefault();
-            handler(event);
-        });
-    }
+    document.querySelector('[data-search-form]')?.addEventListener('submit', (event) => {
+        event.preventDefault();
+        handler(event);
+    });
 </script>
 
 <style>
