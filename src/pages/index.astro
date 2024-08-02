@@ -66,7 +66,9 @@ if (url) {
         searchButton.ariaBusy = 'true';
         searchField.disabled = true;
 
-        const result = await fetch(`/getSong?url=${encodeURI(url as string)}`);
+        const result = await fetch(`/getSong?url=${encodeURI(url as string)}`).catch(
+            () => new Response('Network error', { status: 400 })
+        );
 
         searchButton.disabled = false;
         searchButton.ariaBusy = null;
