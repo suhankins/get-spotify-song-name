@@ -10,7 +10,7 @@ Installable as a PWA, it even registers itself as a Share Target, so you can get
 
 ## Design goals
 
-* Ship as litte JavaScript as possible
+* Ship as little JavaScript as possible
 * Have it work even if JavaScript is disabled
 
 ## Original project
