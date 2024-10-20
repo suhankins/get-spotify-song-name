@@ -25,11 +25,17 @@ export async function getSongData(url: string | null) {
     const text = await result.text();
 
     const title = text.match(/(?<=og:title" content=")(.*?)(?=")/gm)?.[0];
-    const artist = text.match(/(?<=music:musician_description" content=")(.*?)(?=")/gm)?.[0];
+    const artist =
+        text.match(/(?<=music:musician_description" content=")(.*?)(?=")/gm)?.[0] ||
+        text.match(/(?<= - Album by )(.*?)(?= | Spotify<\/title>)/gm)?.[0];
     const cover = text.match(/(?<=:image" content=")(.*?)(?=")/gm)?.[0];
 
-    if (!title || !artist || !cover) {
-        throw new Error('Invalid URL', { cause: 400 });
+    if (!title) {
+        throw new Error('No title', { cause: 400 });
+    } else if (!artist) {
+        throw new Error('No artist', { cause: 400 });
+    } else if (!cover) {
+        throw new Error('No cover', { cause: 400 });
     }
 
     const color = await getCoverColor(cover);
@@ -38,6 +44,6 @@ export async function getSongData(url: string | null) {
         title: he.decode(title),
         artist: he.decode(artist),
         cover,
-        color
+        color,
     };
 }
