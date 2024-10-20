@@ -28,7 +28,8 @@ export async function getSongData(url: string | null) {
     const artist =
         text.match(/(?<=music:musician_description" content=")(.*?)(?=")/gm)?.[0] ||
         text.match(/(?<= - Album by )(.*?)(?= | Spotify<\/title>)/gm)?.[0] ||
-        text.match(/(?<=og:description" content=")(.*?)(?= · Episode")/gm)?.[0];
+        text.match(/(?<=og:description" content=")(.*?)(?= · Episode")/gm)?.[0] ||
+        text.match(/(?<={"@type":"Person","name":")(.*?)(?="})/gm)?.[0];
     const cover = text.match(/(?<=:image" content=")(.*?)(?=")/gm)?.[0];
 
     if (!title) {
