@@ -5,17 +5,18 @@ export async function getCoverColor(coverUri: string) {
     if (!image) return null;
 
     // 4 components, once every 5 pixels
-    const step = 4 * 5;
+    const STEP = 20;
 
     let rTotal = 0;
     let gTotal = 0;
     let bTotal = 0;
     let total = 0;
 
-    for (let i = 0; i < image.bitmap.data.length; i += step) {
+    for (let i = 0; i < image.bitmap.data.length; i += STEP) {
         rTotal += image.bitmap.data[i];
         gTotal += image.bitmap.data[i + 1];
         bTotal += image.bitmap.data[i + 2];
+        // Forth component is alpha, which we don't care about
         total++;
     }
 
