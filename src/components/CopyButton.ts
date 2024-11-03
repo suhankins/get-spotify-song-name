@@ -5,7 +5,7 @@ import { when } from 'lit/directives/when.js';
 
 @customElement('copy-button')
 export class CopyButton extends LitElement {
-    @property({ type: String, attribute: 'text' })
+    @property({ type: String })
     text = '';
 
     @state()

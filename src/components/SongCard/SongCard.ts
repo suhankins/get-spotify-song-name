@@ -3,23 +3,27 @@ import { customElement, property } from 'lit/decorators.js';
 import '../CopyButton';
 import styles from './SongCard.css?raw';
 import { getFullTitle } from '../../utils/getFullTitle';
+import type { Position } from '../../types/Position';
 
 @customElement('song-card')
 export class SongCard extends LitElement {
-    @property({ type: String, attribute: 'title' })
+    @property({ type: String, attribute: 'song-title' })
     title = 'No title';
 
-    @property({ type: String, attribute: 'artist' })
+    @property({ type: String })
     artist = 'No artist';
 
-    @property({ type: String, attribute: 'cover' })
+    @property({ type: String })
     cover: string = '';
+
+    @property({ type: String })
+    position: Position = '';
 
     static styles = unsafeCSS(styles);
 
     override render() {
         const copyString = getFullTitle(this.title, this.artist);
-        return html`<article class="card" role="region" aria-live="polite">
+        return html`<article class="card" role="region" aria-live="polite" data-position="${this.position}">
             <div class="image">
                 <img src="${this.cover}" data-song-cover alt="" />
             </div>

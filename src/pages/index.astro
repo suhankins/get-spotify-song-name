@@ -1,27 +1,29 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { SongCard } from '../components/SongCard/SongCard';
 import AboutLink from '../components/AboutLink.astro';
 import Searchbar from '../components/Searchbar.astro';
 import { getSongData } from '../utils/getSongData';
 import { getFullTitle } from '../utils/getFullTitle';
+import type Song from '../types/Song';
+import { SongList } from '../components/CardList';
 
-let title = 'No title';
-let artist = 'No artist';
-let fullTitle = null;
-let cover = null;
+let pageTitle = null;
 let error = '';
 let color: string | null = null;
+let songs: Song[] = []; 
 
 const url = Astro.url.searchParams.get('url');
 if (url) {
     try {
-        const result = await getSongData(url);
-        title = result.title;
-        artist = result.artist;
-        cover = result.cover;
-        color = result.color;
-        fullTitle = getFullTitle(title, artist);
+        const songUrls = decodeURIComponent(url).split(' ');
+        songs = await Promise.all(songUrls.map((songUrl) => getSongData(songUrl)));
+        if (songs.length === 1) {
+            const song = songs[0];
+            pageTitle = getFullTitle(song.title, song.artist);
+        } else {
+            pageTitle = `List of ${songs.length} songs`;
+        }
+        color = songs[0].color;
     } catch (err) {
         if (!(err instanceof Error)) {
             return;
@@ -31,11 +33,11 @@ if (url) {
 }
 ---
 
-<Layout song={fullTitle} color={color}>
+<Layout song={pageTitle} color={color}>
     <main>
         <Searchbar error={error} />
-        {/*<SongCard cover={cover} title={title} artist={artist} copyString={getFullTitle(title, artist)} /> */}
-        <SongCard client:load />
+        {/* @ts-expect-error */}
+        <SongList client:load songs={songs} />
     </main>
     <AboutLink />
 </Layout>
@@ -44,6 +46,7 @@ if (url) {
     import { validateUrl } from '../utils/validateUrl';
     import { getFullTitle } from '../utils/getFullTitle';
     import { websiteTitle } from '../utils/websiteTitle';
+import type { Song } from '../types/Song';
 
     const handler = async (event: Event) => {
         const searchButton = document.querySelector('[data-search-button]') as HTMLButtonElement;
@@ -79,7 +82,7 @@ if (url) {
             errorField.innerHTML = await result.text();
             return;
         }
-        const songData = await result.json();
+        const songData: Song[] = await result.json();
 
         document.querySelector('[data-song-title]')!.innerHTML = songData.title;
         document.querySelector('[data-song-artist]')!.innerHTML = songData.artist;

@@ -9,6 +9,25 @@
     padding: 16px;
 }
 
+.card[data-position="first"] {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.card[data-position="last"] {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.card[data-position="middle"] {
+    border-radius: 0;
+}
+
+.card:not([data-position=""]) .image {
+    width: 64px;
+    height: 64px;
+}
+
 .image {
     width: 128px;
     height: 128px;

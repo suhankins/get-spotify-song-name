@@ -1,8 +1,9 @@
 import he from 'he';
 import { validateUrl } from './validateUrl';
 import { getCoverColor } from './getCoverColor';
+import { type Song } from '../types/Song';
 
-export async function getSongData(url: string | null) {
+export async function getSongData(url: string | null): Promise<Song> {
     if (!url || !validateUrl(url)) {
         throw new Error('No url provided', { cause: 400 });
     }
@@ -15,7 +16,7 @@ export async function getSongData(url: string | null) {
     });
 
     if (result.status === 404) {
-        throw new Error('Song not found', { cause: 404 });
+        throw new Error(`Song not found: ${songUrl}`, { cause: 404 });
     }
 
     if (!result.ok) {
