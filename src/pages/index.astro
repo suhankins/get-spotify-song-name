@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import SongCard from '../components/SongCard.astro';
+import { SongCard } from '../components/SongCard/SongCard';
 import AboutLink from '../components/AboutLink.astro';
 import Searchbar from '../components/Searchbar.astro';
 import { getSongData } from '../utils/getSongData';
@@ -34,7 +34,8 @@ if (url) {
 <Layout song={fullTitle} color={color}>
     <main>
         <Searchbar error={error} />
-        <SongCard cover={cover} title={title} artist={artist} copyString={getFullTitle(title, artist)} />
+        {/*<SongCard cover={cover} title={title} artist={artist} copyString={getFullTitle(title, artist)} /> */}
+        <SongCard client:load />
     </main>
     <AboutLink />
 </Layout>
