@@ -1,0 +1,42 @@
+.round-button {
+    display: flex;
+    place-items: center;
+    justify-content: center;
+    background: rgba(0.2, 0.2, 0.2, 0);
+    border: none;
+    border-radius: 9999px;
+    width: 32px;
+    height: 32px;
+    aspect-ratio: 1;
+}
+
+.round-button:hover {
+    border: white 2px solid;
+    background-color: rgba(0.2, 0.2, 0.2, 0.3);
+    cursor: pointer;
+}
+
+.round-button > svg {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    pointer-events: none;
+}
+
+svg {
+    stroke-width: 1.5;
+    stroke: currentColor;
+    fill: none;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}

@@ -1,5 +1,5 @@
 ---
-import CopyButton from './CopyButton.astro';
+import { CopyButton } from '../components/CopyButton';
 
 interface Props {
     title: string;
@@ -24,7 +24,8 @@ const { title, artist, cover, copyString } = Astro.props;
                 <span data-song-artist>{artist}</span>
             </p>
         </div>
-        <CopyButton text={copyString} />
+        {/* @ts-expect-error */}
+        <CopyButton client:only="lit" text={copyString} />
     </div>
 </article>
 
@@ -61,6 +62,10 @@ const { title, artist, cover, copyString } = Astro.props;
     .info-container {
         display: flex;
         width: 100%;
+    }
+
+    copy-button {
+        margin-left: auto;
     }
 
     .info {
